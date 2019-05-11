@@ -16,7 +16,13 @@ namespace ConsoleRace
         public int Tavolsag { get; private set; }
         public int SorID { get; set; }
         public ConsoleColor Color { get; set; }
+        public static int Total { get; private set; }
         public bool Vege { get { return Tavolsag == 100; } }
+
+        static Logger()
+        {
+            Total = 0;
+        }
 
         public Logger(ConsoleColor color)
         {
@@ -32,9 +38,11 @@ namespace ConsoleRace
 
         public void Lep()
         {
-            Thread.Sleep(rnd.Next(50, 300));
+            Thread.Sleep(rnd.Next(50, 301));
+            int res = Szamol();
             lock (_lock)
             {
+                Total += res;
                 Console.SetCursorPosition(this.Tavolsag, this.SorID);
                 Console.ForegroundColor = this.Color;
                 Console.Write(Szamol());

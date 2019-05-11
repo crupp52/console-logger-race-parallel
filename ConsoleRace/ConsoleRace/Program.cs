@@ -34,6 +34,19 @@ namespace ConsoleRace
                 tasks[j].Start();
             }
 
+            Task.Run(() => 
+            {
+                while (true)
+                {
+                    lock (Logger._lock)
+                    {
+                        Console.SetCursorPosition(0, (loggers.Count * 2) + 2);
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine("Összesen: {0}", Logger.Total);
+                    }
+                }
+            });
+
             Task.WaitAll(tasks);
         }
     }
